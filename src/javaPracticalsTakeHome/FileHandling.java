@@ -3,6 +3,7 @@ package javaPracticalsTakeHome;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,21 +13,24 @@ import java.util.List;
 public class FileHandling {
 	static String path ="./" +"DataFolder//Dictionary.txt";
 	
-	public static void doesFileExist(String path) {
-		File f1 = new File(path);
-		if(f1.exists()!=true) {
-			try {
-				f1.createNewFile();
+	public static void doesFileExist(String path) throws IOException {
+		try {	
+			File f1 = new File(path);
+			if(f1.exists()!=true) {
+			f1.createNewFile();
 				System.out.println("File has been created.");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-			else if(f1.exists()== false) {
-				System.out.println("File does not exist.");
+			} 
+			else if(!f1.exists()) {
+				throw new FileNotFoundException();
 		}
 			else {
 				System.out.println("File exist.");
+		}
+			}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("File does not exist.");
+
 		}
 	}
 
@@ -55,19 +59,14 @@ public class FileHandling {
 		while((line = br.readLine())!=null) {
 			readerList.add(line);
 		}
-			
-		System.out.println("Word1     : " + readerList.get(0).split("-")[0]);
-		System.out.println("Meaning 1 : " + readerList.get(0).split("-")[1].split(",")[0]);
-		System.out.println("Meaning 2 : " + readerList.get(0).split("-")[1].split(",")[1]);
-		System.out.println("Word2     : " +  readerList.get(1).split("-")[0]);
-		System.out.println("Meaning 1 : " +readerList.get(1).split("-")[1].split(",")[0]);
-		System.out.println("Meaning 2 : " + readerList.get(1).split("-")[1].split(",")[1]);
-		System.out.println ("Word3    : " + readerList.get(2).split("-")[0]);
-		System.out.println("Meaning 1 : " +readerList.get(2).split("-")[1].split(",")[0]);
+			for(int i =0; i<readerList.size();i++) {	
+				System.out.println("Word"+(i+1)+"     : " + readerList.get(i).split("-")[0]);
+				System.out.println("Meaning 1 : " + readerList.get(i).split("-")[1].split(",")[0]);
+				if(i<(readerList.size()-1)){
+				System.out.println("Meaning 2 : " + readerList.get(i).split("-")[1].split(",")[1]);
+				}
+			}
 	}
-
-	
-
 }
 
 //FileInputStream/BufferInputStream-as a file-RawData/BinaryData--can be used for txt file also
