@@ -1,4 +1,4 @@
-package practice;
+package javaPracticalsTakeHome;
 
 import java.util.Random;
 import java.util.Scanner;
